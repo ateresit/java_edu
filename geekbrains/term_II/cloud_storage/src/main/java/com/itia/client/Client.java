@@ -36,15 +36,12 @@ public class Client extends JFrame {
         JTextField textField = new JTextField();
 
         btnSend.addActionListener(a -> {
-//            String fileName = textField.getText();
-//            sendMessage(message);
-            String[] cmd = textField.getText().split("");
+            String[] cmd = textField.getText().split(" ");
             if ("upload".equals(cmd[0])){
                 sendFile(cmd[1]);
             } else if ("download".equals(cmd[0])) {
                 getFile(cmd[1]);
             }
-
         });
 
         // отключаемся от сервера, если закрыли окно
@@ -64,11 +61,11 @@ public class Client extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
-/*
+
     private void getFile(String fileName) {
         // TODO: 13.05.2021  downloading
     }
-*/
+
     private void sendFile(String fileName) {
         try {
             File file = new File(CLIENT_FOLDER + fileName);

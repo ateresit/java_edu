@@ -16,17 +16,14 @@ public class ClientHandler implements Runnable {
     public void run() {
         try (
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-                )
-        {
+                DataInputStream in = new DataInputStream(socket.getInputStream())
+        ) {
             while (true){
                 String command = in.readUTF();
-
                 // инициация и запись файла на сервер
                 if ("upload".equals(command)){
                     uploading(out, in);
                 }
-
                 // инициализация и выгрузка файла с сервера
                 if ("download".equals(command)){
                     // TODO: 13.05.2021 downloading
@@ -34,10 +31,8 @@ public class ClientHandler implements Runnable {
 
                 // закрытие соединения по запросу от клиента
                 if ("exit".equals(command)){
-
-                    out.writeUTF("exit_done");
+                    out.writeUTF("DONE");
                     disconnectClient();
-
                     break;
                 }
 
@@ -61,14 +56,15 @@ public class ClientHandler implements Runnable {
             long fileSize = in.readLong();
             byte[] buffer = new byte[8 * 1024];
 
-            for (int i = 0; i < ((fileSize + (buffer.length - 1)) / buffer.length); i++) {
+ //           for (int i = 0; i < ((fileSize + (buffer.length - 1)) / buffer.length); i++) {
+            for (int i = 0; i < (fileSize + (8 * 1024 - 1)) / (8 * 1024); i++) {
                 int read = in.read(buffer);
                 fos.write(buffer, 0, read);
             }
             fos.close();
-            out.writeUTF("file_received");
+            out.writeUTF("OK");
         } catch (IOException e) {
-            out.writeUTF("file_not_received");
+            out.writeUTF("WRONG");
         }
     }
 

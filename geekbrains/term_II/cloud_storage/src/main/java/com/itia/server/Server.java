@@ -12,14 +12,12 @@ public class Server {
 
     public Server() {
         ExecutorService service = Executors.newFixedThreadPool(THREAD_QTY);
-
         try (ServerSocket server = new ServerSocket(SERVER_PORT)) {
             System.out.println("Server started at port: " + SERVER_PORT);
-
             while (true){
                 Socket socket = server.accept();
-                service.execute(new ClientHandler(socket));
                 System.out.println("Client connected at port: " + socket.getInetAddress());
+                service.execute(new ClientHandler(socket));
             }
         } catch (IOException e) {
             e.printStackTrace();
