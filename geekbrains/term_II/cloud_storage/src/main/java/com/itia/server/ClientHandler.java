@@ -27,6 +27,7 @@ public class ClientHandler implements Runnable {
                 // инициализация и выгрузка файла с сервера
                 if ("download".equals(command)){
                     // TODO: 13.05.2021 downloading
+                    downloading (out, in);
                 }
 
                 // закрытие соединения по запросу от клиента
@@ -43,6 +44,44 @@ public class ClientHandler implements Runnable {
             System.out.printf("Client %s disconnected\n", socket.getInetAddress());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void downloading(DataOutputStream out, DataInputStream in) throws IOException {
+        try {
+            File file = new File(SERVER_FOLDER + in.readUTF());
+            if (!file.exists()) {
+                out.writeUTF("file_not_found"); // сообщение клиенту, что запрашиваемого файла нет на сервере
+                throw new FileNotFoundException();
+            }
+
+            // файл найден, можно делать передачу клиенту
+            out.writeUTF("file_found");
+            long fileLength = file.length();
+
+            FileInputStream fis = new FileInputStream(file);
+            out.writeLong(fileLength);
+            // делаем буфер
+            int read = 0;
+            byte[] buffer = new byte[8 * 1024];
+
+            while ((read = fis.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            out.flush(); // очистка
+
+            // отправляем статус клиенту
+            while (true){
+                String downloadResult = in.readUTF();
+                if ("file_received".equals(downloadResult)) {
+                    out.writeUTF("OK");
+                    break;
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            out.writeUTF("WRONG");
+            System.err.println("File not found!");
         }
     }
 
