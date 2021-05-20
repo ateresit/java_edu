@@ -64,6 +64,44 @@ public class Client extends JFrame {
 
     private void getFile(String fileName) {
         // TODO: 13.05.2021  downloading
+        try {
+            out.writeUTF("download");
+            out.writeUTF(fileName);
+
+            while (true) {  // ожидаем результат от сервера о наличии запрашиваемого файла
+                String findResult = in.readUTF();
+
+                if ("file_not_found".equals(findResult)) {
+                    throw new FileNotFoundException();
+                } else if ("file_found".equals(findResult)){
+                    System.out.println("Server info: file found");
+                    break;
+                }
+            }
+
+            File file = new File(CLIENT_FOLDER + fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileOutputStream fos = new FileOutputStream(file);
+            long fileSize = in.readLong();
+            byte[] buffer = new byte[8 * 1024];
+
+            for (int i = 0; i < (fileSize + (8 * 1024 - 1)) / (8 * 1024); i++) {
+                int read = in.read(buffer);
+                fos.write(buffer, 0, read);
+            }
+            fos.close();
+            out.writeUTF("file_received"); // отправили серверу, что файл принят
+
+            String status = in.readUTF();
+            System.out.println("Downloading status: " + status);
+        } catch (FileNotFoundException e) {
+            System.err.printf("Server: File %s not found!\n", fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendFile(String fileName) {
