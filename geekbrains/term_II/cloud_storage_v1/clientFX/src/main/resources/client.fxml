@@ -11,4 +11,12 @@
             fx:controller="com.itia.cs.client.Controller"
             prefHeight="400.0" prefWidth="600.0">
 
+<VBox>
+    <TextArea fx:id="mainWindow" editable="false" VBox.vgrow="ALWAYS"/>
+    <HBox>
+        <TextField fx:id="commandLine" HBox.hgrow="ALWAYS" promptText="Введите команду здесь: "/>
+        <Button text="send" onAction="#sendMsgAction"/>
+    </HBox>
+</VBox>
+
 </AnchorPane>
