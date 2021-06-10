@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<VBox fx:controller="com.itia.cs.client.Controller" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+
+    <HBox alignment="BASELINE_RIGHT" spacing="5">
+        <padding>
+            <Insets bottom="5" left="5" right="5" top="5"/>
+        </padding>
+        <TextField fx:id="loginField" promptText="login"/>
+        <PasswordField fx:id="passwordField" promptText="password"/>
+        <Button fx:id="connectBtn" text="Подключиться" onAction="#connectBtnAction"/>
+        <Button fx:id="disconnectBtn" text="Отключиться" visible="false" managed="false" onAction="#disconnectBtnAction"/>
+        <Button text="Выход" onAction="#btnExitAction"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS">
+        <fx:include fx:id="clientPanel" source="clientPanel.fxml"/>
+        <fx:include fx:id="serverPanel" source="serverPanel.fxml"/>
+    </HBox>
+
+    <HBox fx:id="commandButtons" spacing="5" visible="false" managed="false">
+        <padding>
+            <Insets bottom="5" left="5" right="5" top="5"/>
+        </padding>
+        <Button text="Upload" focusTraversable="false" HBox.hgrow="ALWAYS" maxWidth="-Infinity" onAction="#uploadBtnAction"/>
+        <Button text="Download" focusTraversable="false" HBox.hgrow="ALWAYS" maxWidth="-Infinity"/>
+        <Button text="Создать папку" focusTraversable="false" HBox.hgrow="ALWAYS" maxWidth="-Infinity"/>
+        <Button text="Удалить папку" focusTraversable="false" HBox.hgrow="ALWAYS" maxWidth="-Infinity"/>
+        <Button text="Найти" focusTraversable="false" HBox.hgrow="ALWAYS" maxWidth="-Infinity"/>
+        <Button text="Удалить файл" focusTraversable="false" HBox.hgrow="ALWAYS" maxWidth="-Infinity"/>
+        <Button text="Переименовать" focusTraversable="false" HBox.hgrow="ALWAYS" maxWidth="-Infinity"/>
+    </HBox>
+
+</VBox>

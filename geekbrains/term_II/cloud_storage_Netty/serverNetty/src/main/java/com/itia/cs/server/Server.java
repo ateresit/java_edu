@@ -7,6 +7,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
 public class Server {
     public static final int SERVER_PORT = 7799;
@@ -26,7 +28,13 @@ public class Server {
                         // конвейер
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new ClientHandler());
+                            socketChannel.pipeline().addLast(
+                                    // in handlers
+                                    new StringEncoder(),
+                                    new ClientHandler(),
+                                    // out handlers
+                                    new StringDecoder()
+                            );
                         }
                     });
 
