@@ -13,7 +13,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
-public class GeneralController implements Initializable {
+public class not_work_GeneralController implements Initializable {
     private Socket socket;
     private final int SERVER_PORT = 7799;
     private final String SERVER_IP = "localhost";
@@ -99,10 +99,7 @@ public class GeneralController implements Initializable {
                 try {
                     /** Цикл аутентификации */
                     while (true) {
- //                       String serverMSG = in.readUTF();
-                        byte srvMSG = in.readByte();
-                        System.out.println(serverMSG);
-
+                        String serverMSG = in.readUTF();
 
 
                         if (serverMSG.startsWith("/")) {

@@ -1,5 +1,7 @@
 package com.itia.cs.client;
 
+import com.itia.cs.client.handlers.ServerMessageHandler;
+import com.itia.cs.commands.Command;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -45,6 +48,8 @@ public class Controller implements Initializable {
     private Network network;
     private boolean authenticated;
     private ServerPanelController serverPanelController;
+    private ServerMessageHandler serverMessageHandler;
+    public static List<FileInfo> fileInfoList;
 
     public void setAuthenticated(boolean authenticated){
         this.authenticated = authenticated;
@@ -73,6 +78,7 @@ public class Controller implements Initializable {
 //        commandLine.requestFocus();
     }
 
+
     public void btnExitAction(ActionEvent actionEvent) {
         network.closeConnection();
         setAuthenticated(false);
@@ -91,15 +97,26 @@ public class Controller implements Initializable {
 
     }
 
-    public void connectBtnAction(ActionEvent actionEvent) {
-        System.out.println("в поле ЛОГИН ввели " + loginField.getText());
+    public void connect () {
         network = new Network();
- //       network.sendMessage(loginField.getText());
-        setAuthenticated(true);
+
+    }
+
+    public void connectBtnAction(ActionEvent actionEvent) {
+//        network = new Network();
+        if (network == null) {
+            connect();
+        }
+        network.sendMessage(String.format("%s %s %s", Command.AUTHY, loginField.getText().trim(), passwordField.getText().trim()));
+//        setAuthenticated(serverMessageHandler.isAuthenticated());
+//        System.out.println(serverMessageHandler.isAuthenticated());
     }
 
     public void disconnectBtnAction(ActionEvent actionEvent) {
-        network.closeConnection();
+        if (network != null) {
+            network.closeConnection();
+        }
+
         setAuthenticated(false);
     }
 

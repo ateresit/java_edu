@@ -11,9 +11,11 @@ public class SQLHandler {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:cloud_storage.db");
+            System.out.println("DB connected OK!");
             preparedAllStatements();
             return true;
         } catch (Exception e) {
+            System.out.println("DB connect ERROR!");
             e.printStackTrace();
             return false;
         }
@@ -24,7 +26,6 @@ public class SQLHandler {
     }
 
     public static String getUserDesktop(String login, String password) {
-        System.out.println("поиск папки");
         String userDesktop = null;
 
         try {
@@ -37,7 +38,6 @@ public class SQLHandler {
 
             }
             rs.close();
-            System.out.println(userDesktop);
 
         } catch (SQLException e) {
             e.printStackTrace();
