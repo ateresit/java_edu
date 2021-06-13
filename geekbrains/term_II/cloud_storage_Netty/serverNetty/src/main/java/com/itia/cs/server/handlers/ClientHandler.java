@@ -10,7 +10,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import java.nio.charset.StandardCharsets;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter {
-    private DBAuthService authService;
+    private AuthService authService;
 
 
     @Override
@@ -39,11 +39,16 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                     RuntimeException e = new RuntimeException("Невозможно подключиться к БД");
                     throw e;
                 }
-                try {
-                    String rootFolder = authService.getDesktopByLoginAndPassword(token[1],token[2]);
-                    System.out.println(rootFolder);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                authService = new DBAuthService();
+                String rootFolder = getAuthService().getDesktopByLoginAndPassword(token[1], token[2]);
+
+                if (rootFolder == null) {
+                    System.out.println("BAD client authy: " + ctx.channel());
+                    ctx.writeAndFlush(Command.AUTHY_ERROR);
+                } else {
+                    System.out.println("client authy OK.");
+                    ctx.writeAndFlush(Command.AUTHY_OK);
+//                    ctx.writeAndFlush(String.format("%s %s", Command.AUTHY_OK, rootFolder));
                 }
             }
         }
@@ -65,4 +70,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         System.out.println("Client disconnected: " + ctx.channel());
         ctx.close();
     }
+
+    public AuthService getAuthService() {
+        return authService;
+    }
+
 }
