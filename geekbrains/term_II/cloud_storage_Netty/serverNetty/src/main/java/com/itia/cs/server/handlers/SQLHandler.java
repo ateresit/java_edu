@@ -1,13 +1,13 @@
-package com.itia.cs.server;
+package com.itia.cs.server.handlers;
 
 import java.sql.*;
 
 public class SQLHandler {
     private static Connection connection;
-    private static PreparedStatement psGetUserName;
+    private static PreparedStatement psUserDesktop;
 
     public static boolean connectDB(){
-        System.out.println("хэндлер авторизации");
+        System.out.println("check connect to DB");
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:cloud_storage.db");
@@ -20,26 +20,29 @@ public class SQLHandler {
     }
 
     private static void preparedAllStatements() throws SQLException {
-        psGetUserName = connection.prepareStatement("SELECT name FROM Users WHERE name = ? AND password = ?");
+        psUserDesktop = connection.prepareStatement("SELECT desktop FROM Users WHERE login = ? AND password = ?");
     }
 
-    public static String getAuthyUserName(String login, String password){
-        String authyUserName = null;
+    public static String getUserDesktop(String login, String password) {
+        System.out.println("поиск папки");
+        String userDesktop = null;
 
         try {
-            psGetUserName.setString(1, login);
-            psGetUserName.setString(2, password);
+            psUserDesktop.setString(1, login);
+            psUserDesktop.setString(2, password);
 
-            ResultSet rs = psGetUserName.executeQuery();
+            ResultSet rs = psUserDesktop.executeQuery();
             if (rs.next()){
-                authyUserName = rs.getString(1);
+                userDesktop = rs.getString(1);
+
             }
             rs.close();
+            System.out.println(userDesktop);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return authyUserName;
+        return userDesktop;
     }
 
     public static void disconnectDB(){
