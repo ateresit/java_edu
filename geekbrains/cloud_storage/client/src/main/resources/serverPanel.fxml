@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+
+<VBox fx:controller="client.ServerPanelController" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+
+    <HBox spacing="5">
+        <padding>
+            <Insets bottom="5" left="5" right="5" top="5"/>
+        </padding>
+        <Text text=" Путь: " textAlignment="CENTER"/>
+        <TextField HBox.hgrow="ALWAYS" editable="false"/>
+        <Button text="Вверх"/>
+    </HBox>
+
+    <TableView fx:id="filesListArea" VBox.vgrow="ALWAYS" />
+
+    <properties>
+        <control><fx:reference source="controller"/></control>
+    </properties>
+
+</VBox>
