@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/product")
@@ -23,14 +25,26 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> products = productRepository.findAll();
+        resp.setContentType("text/html; charset=UTF-8");
+
+        PrintWriter writer = new PrintWriter(new OutputStreamWriter(resp.getOutputStream(), "UTF-8"), true);
 
         /**
          * создание таблицы для вывода продукции
          */
-        resp.getWriter().println("<h1>Таблица продуктов</h1>");
-        resp.getWriter().println("<table>");
+        writer.println("<h1> Таблица с продуктами </h1>");
+        writer.println("<table border=\"1\">");
+        writer.println("<tr><td> ID </td><td> Наименование </td><td> Цена </td></tr>");
 
-        resp.getWriter().println("</table>");
+        for (int i = 0; i < products.size(); i++) {
+            writer.println("<tr>");
+            writer.println("<td>" + products.get(i).getId() + "</td><td>" +
+                                    products.get(i).getTitle() + "</td><td>" +
+                                    products.get(i).getCost() + "</td>");
+            writer.println("</tr>");
+        }
+
+        writer.println("</table>");
 
     }
 }
