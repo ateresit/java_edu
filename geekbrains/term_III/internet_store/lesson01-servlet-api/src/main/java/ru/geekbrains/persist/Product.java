@@ -1,27 +1,40 @@
 package ru.geekbrains.persist;
 
+import java.math.BigDecimal;
+
 public class Product {
     private long id;
-    private String name;
+    private String title;
+    private int cost;
 
-    public Product(long id, String name) {
+    public Product(long id, String title, int cost) {
         this.id = id;
-        this.name = name;
+        this.title = title;
+        this.cost = cost;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
 }

@@ -23,6 +23,10 @@ public class ProductRepository {
         productMap.put(id, product);
     }
 
+    public Product findById(long id) {
+        return productMap.get(id);
+    }
+
     public void update(Product product) {
         productMap.put(product.getId(), product);
     }
