@@ -20,6 +20,8 @@
         <module>lesson01-servlet-api</module>
         <module>lesson02-spring-basics</module>
         <module>lesson03-spring-mvc</module>
+        <module>lesson04-spring-boot</module>
+        <module>lesson05-hibernate</module>
     </modules>
 
 </project>
