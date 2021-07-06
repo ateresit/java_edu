@@ -1,5 +1,6 @@
 package com.itia.cs.client;
 
+import com.itia.cs.client.handlers.ClientMessageHandler;
 import com.itia.cs.client.handlers.ServerMessageHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -10,6 +11,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+
+import java.nio.charset.StandardCharsets;
 
 public class Network {
     public static final String SERVER_IP = "localhost";
@@ -33,7 +36,8 @@ public class Network {
                                         new StringDecoder(), //in-1
                                         new ServerMessageHandler(serverMessage), //in-2
                                         // out handlers
-                                        new StringEncoder() //out-1
+                                        new ClientMessageHandler(), //out-1
+                                        new StringEncoder() //out-final
                                 );
                             }
                         });
@@ -52,10 +56,12 @@ public class Network {
     public void setServerMessage(ServerMessage serverMessage) {
         this.serverMessage = serverMessage;
     }
-
+/*
     public void sendMessage (String message) {
-        channel.writeAndFlush(message);
+            channel.writeAndFlush(message.getBytes(StandardCharsets.UTF_8));
     }
+
+ */
 
     public void closeConnection(){
         channel.close();

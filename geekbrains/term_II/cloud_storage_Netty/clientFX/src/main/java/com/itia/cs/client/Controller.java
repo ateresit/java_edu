@@ -107,7 +107,7 @@ public class Controller implements Initializable {
         if (network == null) {
             connect();
         }
-        network.sendMessage(String.format("%s %s %s", Command.AUTHY, loginField.getText().trim(), passwordField.getText().trim()));
+//        network.sendMessage(String.format("%s %s %s", Command.AUTHY, loginField.getText().trim(), passwordField.getText().trim()));
 //        setAuthenticated(serverMessageHandler.isAuthenticated());
 //        System.out.println(serverMessageHandler.isAuthenticated());
     }
