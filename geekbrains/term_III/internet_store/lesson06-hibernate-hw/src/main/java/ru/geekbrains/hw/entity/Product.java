@@ -2,6 +2,7 @@ package ru.geekbrains.hw.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "Products")
@@ -16,6 +17,12 @@ public class Product {
 
     @Column(name = "price", nullable = true)
     private BigDecimal price;
+
+    @ManyToMany
+    @JoinTable(name = "Products_Customers",
+                joinColumns = @JoinColumn(name = "product_id"),
+                inverseJoinColumns = @JoinColumn(name = "customer_id"))
+    private List<Customer> customers;
 
     public Product() {
     }

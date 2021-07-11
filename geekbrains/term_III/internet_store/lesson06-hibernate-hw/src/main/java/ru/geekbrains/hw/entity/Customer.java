@@ -1,6 +1,7 @@
 package ru.geekbrains.hw.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Customers")
@@ -12,6 +13,12 @@ public class Customer {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @ManyToMany
+    @JoinTable(name = "Products_Customers",
+                joinColumns = @JoinColumn(name = "customer_id"),
+                inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products;
 
     public Customer() {
     }
