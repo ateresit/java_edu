@@ -6,8 +6,9 @@
 #################
 
 dev.md
-readme.md
+# readme.md
 .gitignore
+test_folder/
 
 # IntelliJ
 .idea/
