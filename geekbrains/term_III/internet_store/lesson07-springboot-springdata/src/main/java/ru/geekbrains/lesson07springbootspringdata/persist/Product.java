@@ -1,22 +1,31 @@
 package ru.geekbrains.lesson07springbootspringdata.persist;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "products")
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
+    @Column(name = "title", nullable = false)
     private String title;
-    private int cost;
 
-/*    public Product(long id, String title, int cost) {
-        this.id = id;
-        this.title = title;
-        this.cost = cost;
-    }
+    @Min(value = 0)
+    @Column(name = "cost")
+    private BigDecimal cost;
 
- */
     public Product() {
 
     }
 
-    public Product(String title, int cost){
+    public Product(String title, BigDecimal cost){
         this.title = title;
         this.cost = cost;
     }
@@ -37,11 +46,11 @@ public class Product {
         this.title = title;
     }
 
-    public int getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 

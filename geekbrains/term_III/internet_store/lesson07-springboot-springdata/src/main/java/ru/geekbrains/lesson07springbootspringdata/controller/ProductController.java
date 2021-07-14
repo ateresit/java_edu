@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.geekbrains.lesson07springbootspringdata.persist.Product;
 import ru.geekbrains.lesson07springbootspringdata.persist.ProductRepository;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/product")
@@ -40,19 +43,30 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public String editProduct(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("product", productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not found")));
+        logger.info("Edit product page requested");
+
+        model.addAttribute("product", productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product not found")));
         return "product_form";
     }
 
     @PostMapping
-    public String update(Product product) {
+    public String update(@Valid Product product, BindingResult result) {
         logger.info("Update product");
 
-        if (product.getId() == null) {
-            productRepository.insert(product);
-        } else {
-            productRepository.update(product);
+        if (result.hasErrors()) {
+            return "product_form";
         }
+
+        productRepository.save(product);
+        return "redirect:/product";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
+        logger.info("Deleting product with id {}", id);
+
+        productRepository.deleteById(id);
         return "redirect:/product";
     }
 
