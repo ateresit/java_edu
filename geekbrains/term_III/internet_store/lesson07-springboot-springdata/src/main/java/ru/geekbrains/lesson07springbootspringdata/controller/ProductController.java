@@ -13,6 +13,9 @@ import ru.geekbrains.lesson07springbootspringdata.persist.Product;
 import ru.geekbrains.lesson07springbootspringdata.persist.ProductRepository;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -26,10 +29,22 @@ public class ProductController {
     }
 
     @GetMapping
-    public String productList(Model model){
+    public String productList(Model model,
+                              @RequestParam("productFilter") Optional<String> productFilter,
+                              @RequestParam("minCost") Optional<BigDecimal> minCost,
+                              @RequestParam("maxCost") Optional<BigDecimal> maxCost){
         logger.info("Product list page requested");
 
-        model.addAttribute("products", productRepository.findAll());
+/*        List<Product> products = productFilter
+                .map(productRepository::findByProductnameStartsWith
+                .orElseGet(productRepository::findAll));*/
+
+        List<Product> products = productRepository.filterProducts(
+                productFilter.orElse(null),
+                minCost.orElse(null),
+                maxCost.orElse(null));
+
+        model.addAttribute("products", products);
         return "products";
     }
 
