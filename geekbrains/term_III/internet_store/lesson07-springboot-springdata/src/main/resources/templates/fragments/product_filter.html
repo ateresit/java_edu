@@ -1,10 +1,17 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-    <div class="form-group mb-2 mr-2" th:fragment="product_filter (type, param_id, place)">
-        <label for="productFilter" class="sr-only">[[${place}]]</label>
-        <input type="text" class="form-control" id="productFilter" th:value="${param.param_id}"
-               name="productFilter" placeholder="product filter">
-    </div>
+        <div class="form-group mb-2 mr-2" th:fragment="product_filter (a_type, a_param, a_place, a_val)">
+                <label th:for="${a_param}"
+                       class="sr-only">[[${a_place}]]
+                </label>
+
+                <input th:type="${a_type}"
+                       class="form-control"
+                       th:id="${a_param}"
+                       th:name="${a_param}"
+                       th:placeholder="${a_place}"
+                       th:value="${a_val}" >
+        </div>
 
 </html>
