@@ -1,0 +1,11 @@
+GET http://localhost:8080/spring-mvc-app/api/v1/product/all
+
+###
+
+POST http://localhost:8080/spring-mvc-app/api/v1/product
+Content-Type: application/json
+
+  {
+    "title": "Product super cross",
+    "cost": 5000.00
+  }
