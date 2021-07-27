@@ -1,0 +1,18 @@
+<div class="row py-2">
+  <div class="col-12">
+    <form (ngSubmit)="save()">
+
+      <div class="form-group">
+        <label>Наименование товара</label>
+        <input [(ngModel)]="product.title" type="text" class="form-control" id="title" name="product title" placeholder="Введите наименование товара">
+      </div>
+
+      <div class="form-group">
+        <label>Цена</label>
+        <input [(ngModel)]="product.cost" type="number" class="form-control" id="cost" name="product cost" placeholder="Введите стоимость товара">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
