@@ -1,24 +1,31 @@
 package ru.geekbrains;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.*;
 
 public class Main {
+    private static String brandName;
+
     public static void main(String[] args) {
         RandomValueGen randomValueGen = new RandomValueGen();
-//        NotebookRepo notebookRepo = new NotebookRepo();
 
-        /*System.out.println("price: " + randomValueGen.randomValueWithStep(100, 7, 500, 1000));
-        System.out.println("ram: " + randomValueGen.randomValueWithStep(4, 4, 4, 12));*/
+        List<Notebook> notebooks = new ArrayList<>();
 
-        ArrayList<String> notebookArray = new ArrayList<String>();
-        notebookArray.add(1, new Notebook("Asus",
-                randomValueGen.randomValueWithStep(4, 4, 4, 12),
-                randomValueGen.randomValueWithStep(100, 7, 500, 1000)));
+        addNotebookToArray(randomValueGen, notebooks, "Lenuvo");
+        addNotebookToArray(randomValueGen, notebooks, "Asos");
+        addNotebookToArray(randomValueGen, notebooks, "MacNote");
+        addNotebookToArray(randomValueGen, notebooks, "Eser");
+        addNotebookToArray(randomValueGen, notebooks, "Xamiou");
 
+        System.out.println(notebooks.size());
+        System.out.println(notebooks.toString());
+    }
+
+    private static void addNotebookToArray(RandomValueGen randomValueGen, List<Notebook> notebooks, String brandName) {
+        for (int i = 0; i <1000; i++) {
+            notebooks.add(new Notebook(brandName,
+                    randomValueGen.randomValueWithStep(100, 7, 500, 1000),
+                    randomValueGen.randomValueWithStep(4, 4, 4, 12)));
+        }
     }
 
 }

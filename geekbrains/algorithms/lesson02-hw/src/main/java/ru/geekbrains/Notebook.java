@@ -34,4 +34,9 @@ public class Notebook {
     public void setRamSize(int ramSize) {
         this.ramSize = ramSize;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s\t%s\t%s", brandName, price, ramSize);
+    }
 }
