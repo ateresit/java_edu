@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.springsecurity.controller.UserDto;
 import ru.geekbrains.springsecurity.controller.UserListParams;
 import ru.geekbrains.springsecurity.persist.User;
 import ru.geekbrains.springsecurity.persist.UserRepository;
@@ -13,6 +14,7 @@ import ru.geekbrains.springsecurity.persist.UserSpecifications;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -24,8 +26,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDto> findAll() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserDto(user.getId(), user.getPassword(), user.getAge(), null))
+                .collect(Collectors.toList());
     }
 
     @Override
