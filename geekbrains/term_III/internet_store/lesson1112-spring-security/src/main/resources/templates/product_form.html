@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header ('utf-8', 'EShop application')" />
+
+<body>
+
+<nav th:replace="fragments/navbar :: navibar ('EShop', 'List')"/>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/product}" method="post" th:object="${product}">
+                <input type="hidden" id="id" th:field="*{id}">
+                <div class="form-group">
+                    <label>Наименование товара</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Наименование товара">
+                    <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Стоимость</label>
+                    <input type="number" class="form-control" id="cost" th:field="*{cost}" placeholder="Стоимость товара">
+                    <p class="text-danger" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></p>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="fragments/footer :: footer" />
+
+</body>
+</html>

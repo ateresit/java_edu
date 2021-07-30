@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragments/header :: header ('utf-8', 'EShop application')" />
+
+<body>
+
+<nav th:replace="/fragments/navbar :: navibar ('EShop', 'List')"/>
+
+<div class="container">
+    <div class="row py-2">
+        <h2 th:text="${message}">Error message</h2>
+    </div>
+</div>
+
+<th:block th:include="/fragments/footer :: footer" />
+
+</body>
+</html>
