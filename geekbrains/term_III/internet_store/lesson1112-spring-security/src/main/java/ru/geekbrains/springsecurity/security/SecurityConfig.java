@@ -10,7 +10,8 @@ public class SecurityConfig {
 
     @Autowired
     public void authConfig(AuthenticationManagerBuilder auth,
-                           PasswordEncoder passwordEncoder ) throws Exception {
+                           PasswordEncoder passwordEncoder,
+                           UserAuthService userAuthService) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("mem_user")
                 .password(passwordEncoder.encode("qwe"))
@@ -19,5 +20,7 @@ public class SecurityConfig {
                 .withUser(passwordEncoder.encode("mem_guest"))
                 .password("asd")
                 .roles("GUEST");
+
+        auth.userDetailsService(userAuthService);
     }
 }

@@ -1,9 +1,7 @@
 package ru.geekbrains.springsecurity.controller;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 public class UserDto {
 
@@ -15,8 +13,14 @@ public class UserDto {
     @Min(value = 18)
     private Integer age;
 
-    @Column
+    @NotBlank
     private String password;
+
+    @NotBlank
+    private String repeatPassword;
+
+    public UserDto() {
+    }
 
     public UserDto(Long id, String username, Integer age) {
         this.id = id;
@@ -54,5 +58,13 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 }

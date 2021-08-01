@@ -10,11 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.geekbrains.springsecurity.persist.User;
-import ru.geekbrains.springsecurity.persist.UserRepository;
 import ru.geekbrains.springsecurity.service.UserService;
 
 import javax.validation.Valid;
-import java.util.Properties;
 
 @Controller
 @RequestMapping("/user")
@@ -55,10 +53,15 @@ public class UserController {
     }
 
     @PostMapping
-    public String update(@Valid UserDto user, BindingResult result) {
+    public String update(@Valid @ModelAttribute("user") UserDto user, BindingResult result) {
         logger.info("Saving user");
 
         if (result.hasErrors()) {
+            return "user_form";
+        }
+
+        if (!user.getPassword().equals(user.getRepeatPassword())) {
+            result.rejectValue("password", "", "Repeated password is not correct");
             return "user_form";
         }
 
