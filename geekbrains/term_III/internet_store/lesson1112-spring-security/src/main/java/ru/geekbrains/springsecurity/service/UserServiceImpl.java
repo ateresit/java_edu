@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.springsecurity.controller.UserDto;
 import ru.geekbrains.springsecurity.controller.UserListParams;
@@ -19,21 +20,23 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public List<UserDto> findAll() {
         return userRepository.findAll().stream()
-                .map(user -> new UserDto(user.getId(), user.getPassword(), user.getAge(), null))
+                .map(user -> new UserDto(user.getId(), user.getPassword(), user.getAge()))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Page<User> findWithFilter(UserListParams userListParams) {
+    public Page<UserDto> findWithFilter(UserListParams userListParams) {
         Specification<User> spec = Specification.where(null);
 
         if (userListParams.getUsernameFilter() != null && !userListParams.getUsernameFilter().isBlank()) {
@@ -52,16 +55,23 @@ public class UserServiceImpl implements UserService{
                         Optional.ofNullable(userListParams.getSize()).orElse(3),
                         Sort.by(Optional.ofNullable(userListParams.getSortField())
                                 .filter(c -> !c.isBlank())
-                                .orElse("id"))));
+                                .orElse("id"))))
+                .map(user -> new UserDto(user.getId(), user.getUsername(), user.getAge()));
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDto> findById(Long id) {
+        return userRepository.findById(id)
+                .map(user -> new UserDto(user.getId(), user.getUsername(), user.getAge()));
     }
 
     @Override
-    public void save(User user) {
+    public void save(UserDto userDto) {
+        User user = new User(
+                userDto.getId(),
+                userDto.getUsername(),
+                passwordEncoder.encode(userDto.getPassword()),
+                userDto.getAge());
         userRepository.save(user);
     }
 

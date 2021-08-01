@@ -3,6 +3,7 @@ package ru.geekbrains.springsecurity.controller;
 import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 public class UserDto {
 
@@ -16,6 +17,12 @@ public class UserDto {
 
     @Column
     private String password;
+
+    public UserDto(Long id, String username, Integer age) {
+        this.id = id;
+        this.username = username;
+        this.age = age;
+    }
 
     public Long getId() {
         return id;

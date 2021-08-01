@@ -24,7 +24,8 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, Integer age) {
+    public User(Long id, String username, String password, Integer age) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.age = age;

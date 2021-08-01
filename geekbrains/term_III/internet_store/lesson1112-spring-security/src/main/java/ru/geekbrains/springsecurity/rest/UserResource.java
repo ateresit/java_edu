@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springsecurity.controller.NotFoundException;
+import ru.geekbrains.springsecurity.controller.UserDto;
 import ru.geekbrains.springsecurity.controller.UserListParams;
 import ru.geekbrains.springsecurity.persist.User;
 import ru.geekbrains.springsecurity.service.UserService;
@@ -22,23 +23,23 @@ public class UserResource {
     }
 
     @GetMapping(path = "/all", produces = "application/json")
-    public List<User> findAll() {
+    public List<UserDto> findAll() {
         return userService.findAll();
     }
 
     @GetMapping(path = "/filter", produces = "application/json")
-    public Page<User> findWithFilter(UserListParams userListParams) {
+    public Page<UserDto> findWithFilter(UserListParams userListParams) {
         return userService.findWithFilter(userListParams);
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    public User findById(@PathVariable("id") Long id) {
+    public UserDto findById(@PathVariable("id") Long id) {
         return userService.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     @PostMapping(produces = "application/json")
-    public User create(@RequestBody User user) {
+    public UserDto create(@RequestBody UserDto user) {
         if (user.getId() != null) {
             throw new BadRequestException("User Id should be null");
         }
@@ -47,7 +48,7 @@ public class UserResource {
     }
 
     @PutMapping(produces = "application/json")
-    public void update(@RequestBody User user) {
+    public void update(@RequestBody UserDto user) {
         if (user.getId() == null) {
             throw new BadRequestException("User Id shouldn't be null");
         }

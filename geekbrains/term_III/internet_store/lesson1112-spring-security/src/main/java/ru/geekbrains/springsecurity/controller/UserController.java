@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.geekbrains.springsecurity.persist.User;
 import ru.geekbrains.springsecurity.persist.UserRepository;
+import ru.geekbrains.springsecurity.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Properties;
 
 @Controller
 @RequestMapping("/user")
@@ -20,18 +22,18 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public String listPage(Model model) {
         logger.info("User list page requested");
 
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAll());
         return "users";
     }
 
@@ -47,23 +49,26 @@ public class UserController {
     public String editUser(@PathVariable("id") Long id, Model model) {
         logger.info("Edit user page requested");
 
-        model.addAttribute("user", userRepository.findById(id)
+        model.addAttribute("user", userService.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found")));
         return "user_form";
     }
 
     @PostMapping
-    public String update(@Valid User user, BindingResult result) {
+    public String update(@Valid UserDto user, BindingResult result) {
         logger.info("Saving user");
 
         if (result.hasErrors()) {
             return "user_form";
         }
 
-        userRepository.save(user);
-        return "redirect:/user";
+//        if (user.getAge() > 25) {
+//            result.rejectValue("age", "", "Error message");
+//            return "user_form";
+//        }
 
-//        userRepository.insert(user);
+        userService.save(user);
+        return "redirect:/user";
 
     }
 
@@ -71,7 +76,7 @@ public class UserController {
     public String deleteUser(@PathVariable("id") Long id) {
         logger.info("Deleting user with id {}", id);
 
-        userRepository.deleteById(id);
+        userService.deleteById(id);
         return "redirect:/user";
     }
 
