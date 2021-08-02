@@ -41,7 +41,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll(spec,
                 PageRequest.of(Optional.ofNullable(productListParams.getPage()).orElse(1) - 1,
                         Optional.ofNullable(productListParams.getSize()).orElse(3),
-                        Sort.by(Optional.ofNullable(productListParams.getSortField()).orElse("id"))));
+                        Sort.by(Optional.ofNullable(productListParams.getSortField())
+                                .filter(p -> !p.isBlank())
+                                .orElse("id"))));
     }
 
     @Override

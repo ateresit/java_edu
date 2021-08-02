@@ -45,6 +45,10 @@ public class UserController {
         logger.info("New user page requested");
 
         model.addAttribute("user", new UserDto());
+        model.addAttribute("roles", roleRepository.findAll().stream()
+                .map(role -> new RoleDto(role.getId(), role.getName()))
+                .collect(Collectors.toList()));
+
         return "user_form";
     }
 
