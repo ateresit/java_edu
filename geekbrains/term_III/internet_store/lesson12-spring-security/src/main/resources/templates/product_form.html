@@ -21,27 +21,22 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <form th:action="@{/user}" method="post" th:object="${user}">
+            <form th:action="@{/product}" method="post" th:object="${product}">
                 <input type="hidden" id="id" th:field="*{id}">
                 <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control" id="name" th:field="*{username}" placeholder="Enter username">
-                    <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                    <label>Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Enter product title">
+                    <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
                 </div>
+<!--                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" placeholder="Enter product description"></textarea>
+                    <p class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                </div>-->
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Enter password">
-                    <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                </div>
-                <div class="form-group">
-                    <label>Repeat Password</label>
-                    <input type="password" class="form-control" id="repeatPassword" placeholder="Repeat password">
-                    <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                </div>
-                <div class="form-group">
-                    <label>Age</label>
-                    <input type="number" class="form-control" id="age" th:field="*{age}" placeholder="User age">
-                    <p class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
+                    <label>Cost</label>
+                    <input type="number" class="form-control" step=".01" id="cost" th:field="*{cost}" placeholder="Enter price">
+                    <p class="text-danger" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></p>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

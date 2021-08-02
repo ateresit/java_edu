@@ -1,13 +1,12 @@
-package ru.geekbrains.springsecurity.rest;
+package ru.geekbrains.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.springsecurity.controller.NotFoundException;
-import ru.geekbrains.springsecurity.controller.UserDto;
-import ru.geekbrains.springsecurity.controller.UserListParams;
-import ru.geekbrains.springsecurity.persist.User;
-import ru.geekbrains.springsecurity.service.UserService;
+import ru.geekbrains.controller.NotFoundException;
+import ru.geekbrains.controller.UserDto;
+import ru.geekbrains.controller.UserListParams;
+import ru.geekbrains.service.UserService;
 
 import java.util.List;
 

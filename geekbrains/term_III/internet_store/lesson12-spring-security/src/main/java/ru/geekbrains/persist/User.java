@@ -1,8 +1,6 @@
-package ru.geekbrains.springsecurity.persist;
+package ru.geekbrains.persist;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")

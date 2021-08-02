@@ -1,9 +1,8 @@
-package ru.geekbrains.springsecurity.service;
+package ru.geekbrains.service;
 
 import org.springframework.data.domain.Page;
-import ru.geekbrains.springsecurity.controller.UserDto;
-import ru.geekbrains.springsecurity.controller.UserListParams;
-import ru.geekbrains.springsecurity.persist.User;
+import ru.geekbrains.controller.UserDto;
+import ru.geekbrains.controller.UserListParams;
 
 import java.util.List;
 import java.util.Optional;

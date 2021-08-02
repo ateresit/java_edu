@@ -1,4 +1,4 @@
-package ru.geekbrains.springsecurity.controller;
+package ru.geekbrains.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.geekbrains.springsecurity.persist.User;
-import ru.geekbrains.springsecurity.service.UserService;
+import ru.geekbrains.persist.User;
+import ru.geekbrains.service.UserService;
 
 import javax.validation.Valid;
 

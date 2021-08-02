@@ -1,4 +1,4 @@
-package ru.geekbrains.springsecurity.service;
+package ru.geekbrains.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -7,11 +7,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.springsecurity.controller.UserDto;
-import ru.geekbrains.springsecurity.controller.UserListParams;
-import ru.geekbrains.springsecurity.persist.User;
-import ru.geekbrains.springsecurity.persist.UserRepository;
-import ru.geekbrains.springsecurity.persist.UserSpecifications;
+import ru.geekbrains.controller.UserDto;
+import ru.geekbrains.controller.UserListParams;
+import ru.geekbrains.persist.User;
+import ru.geekbrains.persist.UserRepository;
+import ru.geekbrains.persist.UserSpecifications;
 
 import java.util.List;
 import java.util.Optional;

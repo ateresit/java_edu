@@ -1,33 +1,30 @@
-package ru.geekbrains.springsecurity.persist;
+package ru.geekbrains.springsecurity.controller;
 
-import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "users")
-public class User {
+public class UserDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank
     private String username;
 
-    @Column(nullable = false)
+    @Min(value = 18)
     private Integer age;
 
-    @Column
+    @NotBlank
     private String password;
 
-    public User() {
+    @NotBlank
+    private String repeatPassword;
+
+    public UserDto() {
     }
 
-    public User(Long id, String username, String password, Integer age) {
+    public UserDto(Long id, String username, Integer age) {
         this.id = id;
         this.username = username;
-        this.password = password;
         this.age = age;
     }
 
@@ -61,5 +58,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 }
