@@ -20,9 +20,13 @@ public class SecurityConfig {
                 .password(passwordEncoder.encode("qwe"))
                 .roles("ADMIN")
                 .and()
-                .withUser(passwordEncoder.encode("mem_guest"))
-                .password("asd")
-                .roles("GUEST");
+                .withUser("mem_guest")
+                .password(passwordEncoder.encode("asd"))
+                .roles("GUEST")
+                .and()
+                .withUser("mem_super_user")
+                .password(passwordEncoder.encode("qwe"))
+                .roles("SUPER_ADMIN");
 
         auth.userDetailsService(userAuthService);
     }
@@ -36,7 +40,8 @@ public class SecurityConfig {
                     .authorizeRequests()
                     .antMatchers("/**/*.css", "/**/*.js").permitAll()
                     .antMatchers("/product/**").permitAll()
-                    .antMatchers("/user/**").hasRole("ADMIN")
+//                    .antMatchers("/user/**").hasRole("ADMIN")
+                    .antMatchers("/user/**").hasAnyRole("ADMIN, SUPER_ADMIN")
                     .and()
                     .formLogin()
                     .loginPage("/login")
