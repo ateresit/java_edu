@@ -1,6 +1,7 @@
 package ru.geekbrains.persist;
 
 import org.springframework.data.jpa.domain.Specification;
+import ru.geekbrains.persist.model.User;
 
 public class UserSpecifications {
     public static Specification<User> usernamePrefix(String prefix) {
