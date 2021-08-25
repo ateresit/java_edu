@@ -20,14 +20,18 @@ public class Picture {
     @Column
     private String storageUUID;
 
+    @ManyToOne
+    private Product product;
+
     public Picture() {
     }
 
-    public Picture(Long id, String name, String contentType, String storageUUID) {
+    public Picture(Long id, String name, String contentType, String storageUUID, Product product) {
         this.id = id;
         this.name = name;
         this.contentType = contentType;
         this.storageUUID = storageUUID;
+        this.product = product;
     }
 
     public Long getId() {
@@ -60,5 +64,13 @@ public class Picture {
 
     public void setStorageUUID(String storageUUID) {
         this.storageUUID = storageUUID;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
