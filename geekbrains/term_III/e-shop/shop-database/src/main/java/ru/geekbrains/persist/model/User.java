@@ -1,4 +1,4 @@
-package ru.geekbrains.persist;
+package ru.geekbrains.persist.model;
 
 import javax.persistence.*;
 import java.util.Set;
