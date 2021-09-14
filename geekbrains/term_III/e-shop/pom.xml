@@ -30,6 +30,7 @@
         <module>shop-database</module>
         <module>shop-admin-app</module>
         <module>shop-backend-api-app</module>
+        <module>picture-service</module>
     </modules>
 
 </project>

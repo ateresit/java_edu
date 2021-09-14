@@ -17,7 +17,7 @@ public class Picture {
     @Column(name = "content_type", nullable = false)
     private String contentType;
 
-    @Column
+    @Column(name = "storageUUID")
     private String storageUUID;
 
     @ManyToOne

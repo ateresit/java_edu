@@ -16,8 +16,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
             countQuery = "select count(p) from Product p")
     Page<Product> findAll(Pageable var2);
 
-    List<Product> findProductByNameLike(String title);
+//    List<Product> findProductByNameLike(String title);
 
-    List<Product> findByPriceBetween(BigDecimal min, BigDecimal max);
+//    List<Product> findByPriceBetween(BigDecimal min, BigDecimal max);
 
 }

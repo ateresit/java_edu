@@ -1,6 +1,9 @@
 package ru.geekbrains.controller.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductDto {
     private Long id;
@@ -12,6 +15,10 @@ public class ProductDto {
     private BigDecimal cost;
 
     private CategoryDto category;
+
+    private List<Integer> pictures;
+
+    private MultipartFile[] newPictures;
 
     public ProductDto() {
     }
@@ -62,5 +69,21 @@ public class ProductDto {
 
     public void setCategory(CategoryDto category) {
         this.category = category;
+    }
+
+    public List<Integer> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Integer> pictures) {
+        this.pictures = pictures;
+    }
+
+    public MultipartFile[] getNewPictures() {
+        return newPictures;
+    }
+
+    public void setNewPictures(MultipartFile[] newPictures) {
+        this.newPictures = newPictures;
     }
 }

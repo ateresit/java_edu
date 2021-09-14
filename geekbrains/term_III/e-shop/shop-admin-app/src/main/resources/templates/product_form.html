@@ -38,6 +38,13 @@
                                 th:selected="${product.category?.id == category.id}"></option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="newPictures">Product image</label>
+                    <input th:field="*{newPictures}" type="file" class="form-control" id="newPictures"
+                           placeholder="Upload new product picture" multiple>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
