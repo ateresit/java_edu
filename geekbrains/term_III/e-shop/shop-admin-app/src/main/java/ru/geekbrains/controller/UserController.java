@@ -33,6 +33,11 @@ public class UserController {
         this.roleRepository = roleRepository;
     }
 
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("activePage", "User");
+    }
+
     @GetMapping
     public String listPage(Model model,
                            UserListParams userListParams) {
