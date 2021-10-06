@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/navigation.html :: head">
+</head>
+
+<body>
+
+<nav th:replace="fragments/navigation.html :: navigation">
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/product/new}">Add Product</a>
+        </div>
+
+        <div class="col-12 mt-3">
+            <form class="form-inline" th:method="get">
+                <div class="form-group mb-2 mr-2">
+                    <label for="categoryId" class="sr-only">Categories</label>
+                    <select class="form-control" id="categoryId" name="categoryId">
+                        <option th:selected="${param.categoryId == null || param.categoryId[0].isBlank()}" value="-1">All</option>
+                        <option th:each="cat : ${categories}"
+                                th:text="${cat.name}"
+                                th:value="${cat.id}"
+                                th:selected="${#strings.equals((param.categoryId != null ? param.categoryId[0] : ''), #strings.toString(cat.id))}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-2 mr-2">
+                    <label for="usernameFilter" class="sr-only">Product name</label>
+                    <input type="text" class="form-control" id="usernameFilter" th:value="${param.usernameFilter}"
+                           name="usernameFilter" placeholder="Username filter">
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-2">Apply</button>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product ('Id', 'id')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product ('Name', 'name')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product ('Category', 'category.name')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product ('Price', 'price')"></th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${products.hasContent()}" th:each="product: ${products.content}">
+                    <th scope="row" th:text="${product.id}">1</th>
+                    <td th:text="${product.name}">Product</td>
+                    <td th:text="${product.category.name}">Category</td>
+                    <td th:text="${product.price}">$100</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i
+                                class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action="@{/product/{id}(id = ${product.id})}">
+                            <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr th:unless="${products.hasContent()}">
+                    <td colspan="4">No data</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div th:replace="fragments/paginator.html :: paginator(${products}, ~{::paginatorLink})">
+            <a th:fragment="paginatorLink" class="page-link"
+               th:text="${num}"
+               th:href="@{/product(categoryId=${param.categoryId}, namePattern=${param.namePattern}, page=${num}, size=${data.size}, sortField=${param.sortField})}">1</a>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/scripts.html :: scripts">
+</th:block>
+
+</body>
+</html>
