@@ -4,19 +4,32 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <groupId>ru.geekbrains</groupId>
     <artifactId>e-shop2</artifactId>
-    <packaging>pom</packaging>
+
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>shop-database</module>
-        <module>shop-admin-app</module>
-        <module>shop-backend-api-app</module>
-    </modules>
+
+    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <java.version>11</java.version>
+        <liquibase.version>4.3.1</liquibase.version>
     </properties>
+
+    <modules>
+        <module>shop-database</module>
+        <module>shop-admin-app</module>
+        <module>shop-backend-api-app</module>
+        <module>picture-service</module>
+    </modules>
 
 </project>
