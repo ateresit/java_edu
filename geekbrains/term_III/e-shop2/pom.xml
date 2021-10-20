@@ -30,6 +30,7 @@
         <module>shop-admin-app</module>
         <module>shop-backend-api-app</module>
         <module>picture-service</module>
+        <module>spring-integration</module>
     </modules>
 
 </project>
