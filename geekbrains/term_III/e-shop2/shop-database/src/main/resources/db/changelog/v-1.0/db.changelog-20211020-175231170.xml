@@ -25,7 +25,7 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="storageId" type="VARCHAR(255)"/>
+            <column name="storageUUID" type="VARCHAR(255)"/>
             <column name="product_id" type="BIGINT"/>
         </createTable>
     </changeSet>
