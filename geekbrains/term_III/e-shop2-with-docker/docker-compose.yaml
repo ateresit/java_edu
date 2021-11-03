@@ -1,0 +1,47 @@
+version: '3'
+services:
+  cloud-config:
+    image: registry.heroku.com/geek-spring-cloud-config/web:latest
+    ports:
+      - 8888:8888
+
+  shop-admin-app:
+    image: registry.heroku.com/geek-shop-admin-app/web:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - file-storage:/var/storage
+    command: bash -c "/apps/wait-for-service.sh db 3306 && /apps/wait-for-service.sh cloud-config 8888 && /apps/entrypoint.sh"
+
+  db:
+    #    image: postgres
+    #    restart: always
+    #    environment:
+    #      POSTGRES_PASSWORD: password
+    #    ports:
+    #    - 5432:5432
+
+    image: mysql:8.0.23
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
+
+  rabbitmq:
+    image: 'bitnami/rabbitmq:latest'
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+volumes:
+  mysql-data:
+  file-storage:
