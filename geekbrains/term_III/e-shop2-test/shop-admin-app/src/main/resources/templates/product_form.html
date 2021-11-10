@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/navigation.html :: head">
+</head>
+
+<body>
+
+<nav th:replace="fragments/navigation.html :: navigation">
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/product}" method="post" th:object="${product}" enctype="multipart/form-data">
+                <input type="hidden" id="id" th:field="*{id}">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter product name">
+                    <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" placeholder="Enter product description"></textarea>
+                    <p class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" class="form-control" step=".01" id="price" th:field="*{price}" placeholder="Enter price">
+                    <p class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="categories">Category</label>
+                    <select class="form-control" id="categories" name="category" required>
+                        <option th:each="category : ${categories}"
+                                th:text="${category.name}"
+                                th:value="${category.id}"
+                                th:selected="${product.category?.id == category.id}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newPictures">Product image</label>
+                    <input th:field="*{newPictures}" type="file" class="form-control" id="newPictures"
+                           placeholder="Upload new product picture" multiple>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <div class="container-fluid mt-4">
+            <div class="card-columns" style="column-count: 5">
+                <div class="card" th:each="picId : ${product.pictures}">
+                    <form class="card-header" th:method="delete" th:action="@{/picture/{pictureId}(pictureId=${picId})}" >
+                        Picture<button class="float-right"><i class="fa fa-times"></i></button>
+                    </form>
+                    <img class="card-img-bottom" th:src="@{/picture/{pictureId}(pictureId=${picId})}"
+                         width="40%"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="fragments/scripts.html :: scripts">
+</th:block>
+
+</body>
+
+</html>
