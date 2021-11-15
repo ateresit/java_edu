@@ -18,7 +18,8 @@ public class Picture {
     private String contentType;
 
     @Column
-    private String storageId; // storageUUID;
+//    private String storageId; // storageUUID;
+    private String storageUUID;
 
     @ManyToOne
     private Product product;
@@ -30,7 +31,7 @@ public class Picture {
         this.id = id;
         this.name = name;
         this.contentType = contentType;
-        this.storageId = storageId;
+        this.storageUUID = storageId;
         this.product = product;
     }
 
@@ -59,11 +60,11 @@ public class Picture {
     }
 
     public String getStorageId() {
-        return storageId;
+        return storageUUID;
     }
 
     public void setStorageId(String storageId) {
-        this.storageId = storageId;
+        this.storageUUID = storageId;
     }
 
     public Product getProduct() {

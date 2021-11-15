@@ -66,7 +66,7 @@
                 <configuration>
                     <propertyFile>target/classes/liquibase-maven-plugin.properties</propertyFile>
                     <systemProperties>
-                        <user.name>aleks_ush</user.name>
+                        <user.name>iTIA</user.name>
                     </systemProperties>
                 </configuration>
                 <dependencies>
