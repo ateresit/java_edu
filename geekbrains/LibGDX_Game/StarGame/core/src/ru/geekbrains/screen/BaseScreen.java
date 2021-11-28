@@ -3,28 +3,52 @@ package ru.geekbrains.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import ru.geekbrains.math.MatrixUtils;
+import ru.geekbrains.math.Rect;
 
 public class BaseScreen implements Screen, InputProcessor {
 
     protected SpriteBatch batch;
+
+    private Rect screenBounds;
+    private Rect worldBounds;
+    private Rect glBounds;
+
+    private Matrix4 worldToGl;
 
     @Override
     public void show() {
         System.out.println("show");
         Gdx.input.setInputProcessor(this);
         batch = new SpriteBatch();
+
+        screenBounds = new Rect();
+        worldBounds = new Rect();
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(1, 0, 0, 1);
+        ScreenUtils.clear(Color.BROWN);
     }
 
     @Override
     public void resize(int width, int height) {
         System.out.println("resize width: " + width + " height: " + height);
+        screenBounds.setSize(width, height);
+        screenBounds.setLeft(0);
+        screenBounds.setBottom(0);
+
+        float aspect = width / (float) height;
+        worldBounds.setHeight(1f);
+        worldBounds.setWidth(1f * aspect);
+        MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds);
+        batch.setProjectionMatrix(worldToGl);
+        
     }
 
     @Override
