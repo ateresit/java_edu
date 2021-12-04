@@ -1,5 +1,7 @@
 package ru.geekbrains.screen.impl;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -24,12 +26,18 @@ public class GameScreen extends BaseScreen {
     private Star[] stars;
     private MainShip mainShip;
 
+    private Music music;
+
     @Override
     public void show() {
         super.show();
         bg = new Texture("dart_vaider_one.jpeg");
         background = new Background(bg);
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
 
         bulletPool = new BulletPool();
 
@@ -66,6 +74,7 @@ public class GameScreen extends BaseScreen {
         bg.dispose();
         atlas.dispose();
         bulletPool.dispose();
+        music.dispose();
     }
 
     @Override
