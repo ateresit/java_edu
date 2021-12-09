@@ -59,7 +59,12 @@ public class RequestHandler implements Runnable {
             socketService.writeResponse(response.toString());
             return;
         }
-            System.out.println("Client disconnected!");
+        try {
+            socketService.close();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+        System.out.println("Client disconnected!");
 
     }
 }
