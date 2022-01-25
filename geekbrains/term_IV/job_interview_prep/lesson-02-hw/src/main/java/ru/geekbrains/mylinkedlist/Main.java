@@ -29,5 +29,9 @@ public class Main {
         // проверка удаления
         linkedList.removeFirst();
         linkedList.display();
+
+        // проверка удаления произвольного элемента
+        linkedList.remove(5);
+        linkedList.display();
     }
 }

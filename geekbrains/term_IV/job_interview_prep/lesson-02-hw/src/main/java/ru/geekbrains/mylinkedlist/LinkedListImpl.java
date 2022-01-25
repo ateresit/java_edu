@@ -57,7 +57,29 @@ public class LinkedListImpl<E> implements LinkedList<E> {
 
     @Override
     public boolean remove(E value) {
-        return false;
+        Node<E> currentElem = firstElem;
+        Node<E> previousElem = null;
+
+        while (currentElem != null) {
+            if (currentElem.item.equals(value)) {
+                break;
+            }
+            previousElem = currentElem;
+            currentElem = currentElem.next;
+        }
+
+        if (currentElem == null) {
+            return false;
+        } else if (currentElem == firstElem) {
+            removeFirst();
+            return true;
+        } else {
+            previousElem.next = currentElem.next;
+        }
+
+        currentElem.next = null;
+        size--;
+        return true;
     }
 
     @Override
