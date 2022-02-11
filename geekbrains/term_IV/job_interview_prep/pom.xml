@@ -12,6 +12,7 @@
         <module>lesson-01</module>
         <module>lesson-01-hw</module>
         <module>lesson-02-hw</module>
+        <module>lesson-06-servlet-hw</module>
     </modules>
 
     <properties>
